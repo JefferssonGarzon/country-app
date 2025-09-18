@@ -1,0 +1,17 @@
+@if (countryResource.error()) {
+<app-not-found></app-not-found>
+}
+
+<!--  -->
+@if (countryResource.isLoading()) {
+<section class="flex flex-col items-center justify-center mt-10">
+  <span class="loading loading-ring loading-xl"></span>
+</section>
+}
+
+<!--  -->
+@if (countryResource.hasValue()) {
+<app-country-info-page
+  [country]="countryResource.value()"
+></app-country-info-page>
+}

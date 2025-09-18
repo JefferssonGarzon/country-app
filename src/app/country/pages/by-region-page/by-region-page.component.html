@@ -1,0 +1,22 @@
+<section class="row mt-5">
+  <div class="flex-col">
+    @for (region of regions; track region) {
+    <button
+      class="btn btn-outline mr-4 w-[100px]"
+      [class.btn-primary]="selectedRegion() === region"
+      (click)="this.selectedRegion.set(region)"
+    >
+      {{ region }}
+    </button>
+    }
+  </div>
+</section>
+
+<section class="mt-5">
+  <app-table
+    [errorMessage]="regionResource.error()"
+    [isLoading]="regionResource.isLoading()"
+    [isEmpty]="regionResource.value()?.length === 0"
+    [countries]="regionResource.value() ?? []"
+  ></app-table>
+</section>

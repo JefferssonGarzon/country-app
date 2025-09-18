@@ -1,0 +1,22 @@
+<app-search
+  [placeholder]="'Buscar por capital'"
+  (search)="query.set($event)"
+  [initialValue]="query()"
+></app-search>
+
+<section class="mt-5">
+  <app-table
+    [errorMessage]="countryResource.error()"
+    [isLoading]="countryResource.isLoading()"
+    [isEmpty]="countryResource.value()?.length === 0"
+    [countries]="countryResource.value() ?? []"
+  ></app-table>
+</section>
+
+<!-- @if (countryResource.error()) {
+<h3>{{ countryResource.error() }}</h3>
+} @if(countryResource.hasValue()) {
+<section class="mt-5">
+  <app-table [countries]="countryResource.value()!"></app-table>
+</section>
+} -->

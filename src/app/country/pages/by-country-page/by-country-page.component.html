@@ -1,0 +1,14 @@
+<app-search
+  [placeholder]="'Buscar por país'"
+  (search)="query.set($event)"
+  [initialValue]="query()"
+></app-search>
+
+<section class="mt-5">
+  <app-table
+    [errorMessage]="countryResource.error()"
+    [isLoading]="countryResource.isLoading()"
+    [isEmpty]="countryResource.value()?.length === 0"
+    [countries]="countryResource.value() ?? []"
+  ></app-table>
+</section>
