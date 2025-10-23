@@ -1,0 +1,122 @@
+<div class="m-5">
+  <h2 class="text-base/7 font-semibold text-white">Reactivos: Switches</h2>
+  <hr />
+
+  <form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+      <div class="sm:col-span-1">
+        <div class="mt-10 grid grid-cols-3 gap-x-7 gap-y-8">
+          <div class="col-span-1">
+            <label for="genre" class="block text-sm/6 font-medium text-white"
+              >Género</label
+            >
+            <div class="flex mt-3">
+              <input
+                type="radio"
+                name="gender"
+                id="male"
+                value="M"
+                formControlName="gender"
+                class="radio radio-primary mr-2"
+                checked="checked"
+              />
+              <label for="male" class="block text-sm/6 font-medium text-white"
+                >Hombre
+              </label>
+            </div>
+            <div class="flex mt-2">
+              <input
+                type="radio"
+                name="gender"
+                id="female"
+                value="F"
+                formControlName="gender"
+                class="radio radio-primary mr-2"
+              />
+              <label for="female" class="block text-sm/6 font-medium text-white"
+                >Mujer
+              </label>
+            </div>
+          </div>
+
+          <div class="col-span-1">
+            <label for="notify" class="block text-sm/6 font-medium text-white"
+              >Notificaciones</label
+            >
+            <div class="flex mt-3">
+              <input
+                id="notify"
+                formControlName="wantNotifications"
+                type="checkbox"
+                checked="checked"
+                class="toggle toggle-secondary mr-2"
+              />
+              <label for="notify" class="block text-sm/6 font-medium text-white"
+                >Quiero recibir notificaciones
+              </label>
+            </div>
+          </div>
+
+          <div class="col-span-1">
+            <label for="terms" class="block text-sm/6 font-medium text-white"
+              >Terminos</label
+            >
+            <div class="flex mt-3">
+              <input
+                id="terms"
+                formControlName="termsAndConditions"
+                type="checkbox"
+                class="checkbox checkbox-accent mr-2"
+              />
+              <label
+                for="terms"
+                [class]="
+                  'block text-sm/6 font-medium' +
+                  (formUtils.isValidField(myForm, 'termsAndConditions')
+                    ? ' text-primary'
+                    : ' text-white')
+                "
+                >Términos y condiciones de uso
+              </label>
+            </div>
+            @if (formUtils.isValidField(myForm, 'termsAndConditions')) {
+            <span class="text-primary">
+              <!-- Debe de ser de 3 letras -->
+              Debe aceptar los términos y condiciones.
+            </span>
+            }
+          </div>
+
+          <div class="col-span-3 mt-5">
+            <button type="submit" class="btn btn-primary float-end">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sm:col-span-1">
+        <div class="m-5">
+          <h5>Valor del formulario</h5>
+          <pre>{{ myForm.errors | json }}</pre>
+          <br />
+
+          <h5>Persona</h5>
+          <pre>{{ myForm.controls["gender"].value | json }}</pre>
+          <br />
+
+          <h5>Valid</h5>
+          <pre>{{ myForm.valid | json }}</pre>
+
+          {{ formUtils.isValidField(myForm, "termsAndConditions") }}
+
+          <!-- <h5>Términos</h5> -->
+          <!-- <pre>{{ myForm.controls?.terminos?.errors | json }}</pre> -->
+
+          <!-- <br>
+<pre>Condiciones: </pre> -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,115 @@
+<div class="m-5">
+  <h2 class="text-base/7 font-semibold text-white">Reactivos: Dinámicos</h2>
+  <hr />
+
+  <form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+      <div class="sm:col-span-1">
+        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8">
+          <div class="col-span-1">
+            <label
+              for="client-name"
+              class="block text-sm/6 font-medium text-white"
+              >Nombre</label
+            >
+            <div class="mt-2">
+              <input
+                id="client-name"
+                type="text"
+                formControlName="name"
+                name="client-name"
+                placeholder="Nombre de la persona"
+                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              />
+              @if (formUtils.isValidField(myForm, "name")) {
+              <span class="text-primary">
+                {{ formUtils.getFieldError(myForm, "name") }}
+              </span>
+              }
+            </div>
+          </div>
+
+          <div class="col-span-1">
+            <div class="join w-full">
+              <div class="w-full">
+                <label
+                  class="input validator join-item w-full"
+                  for="add-favorite"
+                >
+                  <input
+                    id="add-favorite"
+                    type="text"
+                    [formControl]="newFavorite"
+                    name="add-favorite"
+                    placeholder="Agregar favorito"
+                    required
+                    (keydown.enter)="onAddFavorites()"
+                  />
+                </label>
+              </div>
+              <button class="btn btn-primary join-item">
+                Agregar favorito
+              </button>
+            </div>
+          </div>
+
+          <div class="col-span-1">
+            <!-- Lista de Juegos Favoritos -->
+
+            <ng-container formArrayName="favoriteGames">
+              @for (favorite of favoriteGames.controls; track $index; let i =
+              $index) {
+              <div class="join w-full mb-2">
+                <div class="w-full">
+                  <label class="input validator join-item w-full" for="delete">
+                    <input
+                      class="form-control"
+                      [formControlName]="i"
+                      placeholder="Favoritos"
+                      required
+                    />
+                  </label>
+                  @if (formUtils.isValidFieldArray(favoriteGames, i)) {
+                  <div class="text-primary">
+                    {{ formUtils.getFieldArrayError(favoriteGames, i) }}
+                  </div>
+                  }
+                </div>
+                <button
+                  (click)="onDeleteFavorite(i)"
+                  class="btn btn-error join-item"
+                >
+                  Eliminar
+                </button>
+              </div>
+              } @if (formUtils.isValidField(myForm, "favoriteGames")) {
+              <span class="text-primary"> Debe tener al menos 3 juegos </span>
+              }
+            </ng-container>
+          </div>
+
+          <div class="col-span mt-5">
+            <button type="submit" class="btn btn-primary float-end">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="sm:col-span-1">
+        <div class="m-5">
+          <span>Valid</span>
+          <pre>{{ myForm.valid | json }}</pre>
+          <br />
+
+          <span>Value</span>
+          <pre>{{ myForm.value | json }}</pre>
+          <br />
+
+          <span>Agregar Juego</span>
+          <!-- <pre>{{ "object" | json }}</pre>
+          <pre>{{ "object" | json }}</pre> -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,111 @@
+<div class="m-5">
+  <h2 class="text-base/7 font-semibold text-white">Reactivos: Básicos</h2>
+  <hr />
+  <div class="flex justify-center mt-10">
+    <form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSave()">
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
+        <!-- Campo de producto -->
+        <div class="sm:col-span-3">
+          <label
+            for="product-name"
+            class="block text-sm/6 font-medium text-white"
+            >Producto</label
+          >
+          <div class="mt-2">
+            <input
+              id="product-name"
+              type="text"
+              formControlName="name"
+              name="product-name"
+              placeholder="Nombre del producto"
+              class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+            />
+            @if (formUtils.isValidField(myForm, "name")) {
+            <span class="text-primary">
+              <!-- Debe de ser de 3 letras -->
+              {{ formUtils.getFieldError(myForm, "name") }}
+            </span>
+            }
+          </div>
+        </div>
+
+        <!-- Campo de precio -->
+        <div class="sm:col-span-3">
+          <label for="price" class="block text-sm/6 font-medium text-white"
+            >Precio</label
+          >
+          <div class="mt-2">
+            <input
+              id="price"
+              type="number"
+              formControlName="price"
+              name="price"
+              placeholder="Precio del producto"
+              class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+            />
+            @if (formUtils.isValidField(myForm, "price")) {
+            <span class="text-primary">
+              <!-- Debe de ser de 3 letras -->
+              {{ formUtils.getFieldError(myForm, "price") }}
+            </span>
+            }
+          </div>
+        </div>
+
+        <!-- Campo de existencias -->
+        <div class="sm:col-span-3">
+          <label for="stock" class="block text-sm/6 font-medium text-white"
+            >Existencias</label
+          >
+          <div class="mt-2">
+            <input
+              id="stock"
+              type="number"
+              formControlName="inStorage"
+              name="stock"
+              placeholder="Existencias del producto"
+              class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+            />
+            @if (formUtils.isValidField(myForm, "inStorage")) {
+            <span class="text-primary">
+              <!-- Debe de ser de 3 letras -->
+              {{ formUtils.getFieldError(myForm, "inStorage") }}
+            </span>
+            }
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <button type="submit" class="btn btn-primary float-end">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="m-10">
+  <span>Valid</span>
+  <pre>{{ myForm.valid | json }}</pre>
+
+  <span>Pristine</span>
+  <pre>{{ myForm.pristine | json }}</pre>
+
+  <span>Touched</span>
+  <pre>{{ myForm.touched | json }}</pre>
+
+  <span>Value</span>
+  <pre>{{ myForm.value | json }}</pre>
+
+  <span>Fields Errors</span>
+  <pre>{{ myForm.controls["name"].errors | json }}</pre>
+  <pre>{{ myForm.controls["price"].errors | json }}</pre>
+  <pre>{{ myForm.controls["inStorage"].errors | json }}</pre>
+
+  <span>Precio</span>
+  <pre>{{ myForm.controls["price"].value | json }}</pre>
+
+  <span>Producto</span>
+  <pre>{{ myForm.controls["name"].value | json }}</pre>
+</div>

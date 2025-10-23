@@ -4,6 +4,7 @@ import { CountryLayoutComponent } from './layouts/country-layout/country-layout.
 import { ByCountryPageComponent } from './pages/by-country-page/by-country-page.component';
 import { ByRegionPageComponent } from './pages/by-region-page/by-region-page.component';
 import { CountryDetailComponent } from './pages/country-detail/country-detail.component';
+import { CountryFormsPageComponent } from './pages/country-forms-page/country-forms-page.component';
 
 export const countryRoutes: Routes = [
   {
@@ -25,6 +26,18 @@ export const countryRoutes: Routes = [
       {
         path: 'by/:code',
         component: CountryDetailComponent
+      },
+      {
+        path: 'country-forms',
+        component: CountryFormsPageComponent
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import('../auth/auth.routes')
+      },
+      {
+        path: 'reactive',
+        loadChildren: () => import('../reactive/reactive.routes').then(m => m.reactiveRoutes)
       },
 
       {

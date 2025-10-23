@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { RESTCountry } from '../interfaces/rest-countries.interface';
-import { catchError, delay, map, Observable, of, tap, throwError } from 'rxjs';
+import { catchError, combineLatest, delay, map, Observable, of, tap, throwError } from 'rxjs';
 import { CountryMapper } from '../mappers/country.mapper';
-import { Country } from '../interfaces/country.interface';
+import { Country, ShortCountry } from '../interfaces/country.interface';
 import { Region } from '../interfaces/region.type';
 
 const API_URL = 'https://restcountries.com/v3.1';
@@ -15,6 +15,12 @@ export class CountryService {
   private http = inject(HttpClient);
   private queryCacheCountry = new Map<string, Country[]>();
   private queryCacheRegion = new Map<string, Country[]>();
+
+  private _regions = ['Africa', 'America', 'Asia', 'Europe', 'Oceania'];
+
+  get regions(): string[] {
+    return [...this._regions];
+  }
 
   searchCountries(query: string, areaType: string): Observable<Country[]> {
     query = query.toLowerCase();
@@ -84,4 +90,40 @@ export class CountryService {
       );
   }
 
+  getShortCountryByRegion(region: string): Observable<ShortCountry[]> {
+    if (!region) return of([]);
+
+    const URL = `${API_URL}/region/${region}?fields=cca3,name,borders`;
+    return this.http.get<ShortCountry[]>(URL)
+      .pipe(
+        catchError(err => {
+          console.log('Error fetching ', err);
+          return throwError(() => new Error(`Ocurrió un error al consultar por la región ${region}`))
+        })
+      );
+  }
+
+  getShortCountryByAlphaCode(alphaCode: string): Observable<ShortCountry> {
+    const URL = `${API_URL}/alpha/${alphaCode}?fields=cca3,name,borders`;
+    return this.http.get<ShortCountry>(URL)
+      .pipe(
+        catchError(err => {
+          console.log('Error fetching ', err);
+          return throwError(() => new Error(`Ocurrió un error al consultar por la alphaCode ${alphaCode}`))
+        })
+      );
+  }
+
+  getCountryNamesByCodeArray(countryCodes: string[]): Observable<ShortCountry[]> {
+    if (!countryCodes || countryCodes.length === 0) return of([]);
+
+    const countriesRequests: Observable<ShortCountry>[] = [];
+
+    countryCodes.forEach(code => {
+      const request = this.getShortCountryByAlphaCode(code);
+      countriesRequests.push(request);
+    });
+
+    return combineLatest(countriesRequests);
+  }
 }

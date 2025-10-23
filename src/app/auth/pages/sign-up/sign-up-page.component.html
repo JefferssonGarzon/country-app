@@ -1,0 +1,168 @@
+<div class="m-5">
+  <h2 class="text-base/7 font-semibold text-white">Validaciones Reactivas</h2>
+  <hr />
+
+  <form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+      <div class="sm:col-span-1">
+        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8">
+          <div class="col-span-1">
+            <label
+              for="full-name"
+              class="block text-sm/6 font-medium text-white"
+              >Nombre y apellido</label
+            >
+            <div class="mt-2">
+              <input
+                id="full-name"
+                type="text"
+                name="full-name"
+                formControlName="name"
+                placeholder="Nombre completo de la persona"
+                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              />
+              @if (formUtils.isValidField(myForm, "name")) {
+              <span class="text-primary">
+                El campo debe tener un nombre y apellido
+                <!-- {{ formUtils.getFieldError(myForm, "name") }} -->
+              </span>
+              }
+              <!-- <span class="text-primary">
+                Debe de ser en formato de nombre y apellido
+              </span> -->
+            </div>
+          </div>
+
+          <div class="col-span-1">
+            <label for="email" class="block text-sm/6 font-medium text-white"
+              >Email</label
+            >
+            <div class="mt-2">
+              <input
+                id="email"
+                type="email"
+                name="email"
+                formControlName="email"
+                placeholder="Email del usuario"
+                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              />
+              @if (formUtils.isValidField(myForm, "email")) {
+              <span class="text-primary">
+                {{ formUtils.getFieldError(myForm, "email") }}
+              </span>
+              }
+            </div>
+          </div>
+
+          <div class="col-span-1">
+            <label for="username" class="block text-sm/6 font-medium text-white"
+              >Username</label
+            >
+            <div class="mt-2">
+              <input
+                id="username"
+                type="text"
+                name="username"
+                formControlName="username"
+                placeholder="Nombre código del usuario"
+                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              />
+              @if (formUtils.isValidField(myForm, "username")) {
+              <span class="text-primary">
+                {{ formUtils.getFieldError(myForm, "username") }}
+              </span>
+              }
+              <!-- <span class="text-primary">
+                El username no puede ser Strider
+              </span> -->
+            </div>
+          </div>
+
+          <div class="col-span-1">
+            <label for="password" class="block text-sm/6 font-medium text-white"
+              >Contraseña</label
+            >
+            <div class="mt-2">
+              <input
+                id="password"
+                type="password"
+                name="password"
+                formControlName="password"
+                placeholder="Password de su cuenta"
+                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              />
+              @if (formUtils.isValidField(myForm, "password")) {
+              <span class="text-primary">
+                {{ formUtils.getFieldError(myForm, "password") }}
+              </span>
+              }
+              <!-- <span class="text-primary">
+                La contraseña debe de ser mayor de 6 caracteres.
+              </span>
+            </div> -->
+            </div>
+
+            <div class="col-span-1">
+              <label
+                for="password2"
+                class="block text-sm/6 font-medium text-white"
+                >Confirmar contraseña</label
+              >
+              <div class="mt-2">
+                <input
+                  id="password2"
+                  type="password"
+                  name="password2"
+                  formControlName="password2"
+                  placeholder="Password de su cuenta"
+                  class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                />
+                @if (formUtils.isValidField(myForm, "password2")) {
+                <span class="text-primary">
+                  {{ formUtils.getFieldError(myForm, "password2") }}
+                </span>
+                }
+                <!-- <span class="text-primary">
+                Las contraseñas deben de ser iguales
+              </span> -->
+              </div>
+            </div>
+            <div class="col-span mt-5">
+              @if (myForm.errors && myForm.touched) {
+              <div class="text-primary">Las contraseñas no son iguales</div>
+              }
+              <button type="submit" class="btn btn-primary float-end">
+                Crear
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-1">
+          <div class="m-5">
+            <h2>Form Valid: {{ myForm.valid }}</h2>
+            <h2>Form Status: {{ myForm.status }}</h2>
+            <h2>Form Pending: {{ myForm.pending }}</h2>
+            <h2>Form errors</h2>
+            <pre>{{ myForm.errors | json }}</pre>
+
+            <h5>Nombre</h5>
+            <pre>{{ myForm.controls["name"].errors | json }}</pre>
+
+            <h5>Email</h5>
+            <pre>{{ myForm.controls["email"].errors | json }}</pre>
+
+            <h5>Username</h5>
+            <pre>{{ myForm.controls["username"].errors | json }}</pre>
+
+            <h5>Password</h5>
+            <pre>{{ myForm.controls["password"].errors | json }}</pre>
+
+            <h5>Confirmar</h5>
+            <pre>{{ myForm.controls["password2"].errors | json }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

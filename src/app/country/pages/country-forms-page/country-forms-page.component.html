@@ -1,0 +1,57 @@
+<div class="m-5">
+  <h2 class="text-base/7 font-semibold text-white">Selectores anidados</h2>
+  <hr />
+
+  <div class="flex justify-center mt-10">
+    <form autocomplete="off" [formGroup]="myForm">
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
+        <div class="sm:col-span-3">
+          <!-- Region -->
+          <select formControlName="region" class="select select-accent">
+            <option selected disabled value="">
+              -- Seleccione Continente --
+            </option>
+            @for (region of regions(); track region) {
+            <option [value]="region">
+              {{ region }}
+            </option>
+            }
+          </select>
+        </div>
+
+        <div class="sm:col-span-3">
+          <!-- Countries  -->
+          <select formControlName="country" class="select select-accent">
+            <option selected disabled value="">-- Seleccione País --</option>
+            @for (country of countriesByRegion(); track country.cca3) {
+            <option [value]="country.cca3">
+              {{ country.name.common }}
+            </option>
+            }
+          </select>
+        </div>
+
+        <div class="sm:col-span-3">
+          <!-- Borders  -->
+          <select formControlName="border" class="select select-accent">
+            <option selected disabled value="">
+              -- Seleccione la frontera --
+            </option>
+            @for (border of borders(); track border) {
+            <option [value]="border.cca3">
+              {{ border.name.common }}
+            </option>
+            }
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<h3>Formulario</h3>
+<code>
+  <!-- {{ 'myForm.value' | json }} -->
+</code>
+<p>is form valid: {{ myForm.valid }}</p>
+<p>is form value: {{ myForm.value | json }}</p>
